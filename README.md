@@ -32,7 +32,7 @@ is already populated).
 ### Running without Docker (local dev)
 
 ```bash
-# 1. Start Postgres and 3 Redis instances yourself, or just run the
+# 1. Start Postgres and 3 Redis instances , or just run the
 #    Docker Compose services you need:
 docker compose up postgres redis-node-1 redis-node-2 redis-node-3
 
@@ -268,18 +268,3 @@ frontend/                React (Vite) UI
 data/                    Dataset aggregation/generation scripts (run outside Docker)
 docker-compose.yml        Postgres + 3 Redis nodes + backend + frontend
 ```
-
-## 9. Known limitations / further work
-
-- Prefix matching uses `LIKE 'prefix%'` on a B-tree index; `schema.sql`
-  documents the `pg_trgm` GIN-index upgrade path for faster prefix scans
-  at larger scale (not enabled by default since it needs a
-  superuser-installed Postgres extension).
-- `TrendingService`'s sliding window is per-minute buckets, not a smooth
-  decay function — see the trade-off discussion in section 4.
-- The batch writer's in-memory buffer is not crash-durable — see section 5.
-- Single backend instance assumed; the consistent-hash ring config (which
-  physical nodes exist) currently lives in one process's memory, built at
-  startup from `application.yml`. Scaling to multiple backend instances
-  would need that ring definition centralized (e.g. in Redis itself or a
-  config service) so all instances agree on routing.
