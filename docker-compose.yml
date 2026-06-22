@@ -1,0 +1,76 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: typeahead-postgres
+    environment:
+      POSTGRES_DB: typeahead
+      POSTGRES_USER: typeahead
+      POSTGRES_PASSWORD: typeahead
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U typeahead"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # Three INDEPENDENT Redis instances - this is the real distributed
+  # cache layer. The backend's ConsistentHashRing decides, per key,
+  # which of these three a given prefix's cache entry lives on.
+  redis-node-1:
+    image: redis:7-alpine
+    container_name: typeahead-redis-1
+    ports:
+      - "6379:6379"
+
+  redis-node-2:
+    image: redis:7-alpine
+    container_name: typeahead-redis-2
+    ports:
+      - "6380:6379"
+
+  redis-node-3:
+    image: redis:7-alpine
+    container_name: typeahead-redis-3
+    ports:
+      - "6381:6379"
+
+  backend:
+    build:
+      context: ./backend
+    container_name: typeahead-backend
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis-node-1:
+        condition: service_started
+      redis-node-2:
+        condition: service_started
+      redis-node-3:
+        condition: service_started
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: typeahead
+      DB_USER: typeahead
+      DB_PASSWORD: typeahead
+      REDIS_NODES: "redis-node-1:6379,redis-node-2:6379,redis-node-3:6379"
+      SERVER_PORT: 8080
+    ports:
+      - "8080:8080"
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: typeahead-frontend
+    depends_on:
+      - backend
+    ports:
+      - "3000:80"
+
+volumes:
+  pgdata:

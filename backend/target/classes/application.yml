@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: search-typeahead
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:typeahead}
+    username: ${DB_USER:typeahead}
+    password: ${DB_PASSWORD:typeahead}
+    hikari:
+      maximum-pool-size: 10
+  jpa:
+    hibernate:
+      ddl-auto: validate # schema.sql is the source of truth, not Hibernate auto-DDL
+    open-in-view: false
+    properties:
+      hibernate:
+        jdbc:
+          batch_size: 50
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:schema.sql
+
+server:
+  port: ${SERVER_PORT:8080}
+
+# Comma-separated host:port list of the 3 physical Redis nodes.
+# In docker-compose these resolve to the redis-node-1/2/3 service names;
+# for local (non-docker) runs, override via env var to point at
+# localhost:6379/6380/6381 (see README).
+cache:
+  redis-nodes: ${REDIS_NODES:redis-node-1:6379,redis-node-2:6379,redis-node-3:6379}
+
+logging:
+  level:
+    com.typeahead: INFO

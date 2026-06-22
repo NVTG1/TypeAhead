@@ -1,0 +1,24 @@
+AnonID	Query	QueryTime	ItemRank	ClickURL
+24967077	digestive	2006-05-31 02:43:48		
+24967077	digestive	2006-05-31 02:44:57	11	http://www.rxlist.com
+24967077	digestive	2006-05-31 02:47:39	2	http://uillinoismedcenter.org
+24967077	polyp pictures	2006-05-31 03:17:55	11	http://www.gastrolab.net
+24967077	polyp pictures	2006-05-31 03:17:55	13	http://www.medicinenet.com
+24967077	rectal polyp pictures	2006-05-31 03:31:29		
+24967077	rectum polyp pictures	2006-05-31 03:33:40	10	http://www.dfci.harvard.edu
+24967077	rectum adenomas pictures	2006-05-31 03:40:57	14	http://www.nccn.org
+24968270		2006-05-31 11:18:34		
+24968286	games	2006-05-31 17:28:45		
+24968768	www.riteaid.com	2006-05-31 14:48:33		
+24969423	my space. com	2006-05-31 19:02:36		
+24969423	my space. com	2006-05-31 19:03:16		
+24969423	my space.com	2006-05-31 19:12:00		
+iphone	iphone	2026-06-01 09:00:00		
+iphone	iphone	2026-06-01 09:01:00		
+iphone	iphone	2026-06-01 09:02:00		
+iphone	iphone 15	2026-06-01 09:03:00		
+iphone	iphone charger	2026-06-01 09:04:00		
+iphone	iphone case	2026-06-01 09:05:00		
+java	java tutorial	2026-06-01 10:00:00		
+java	java tutorial	2026-06-01 10:01:00		
+java	java spring boot	2026-06-01 10:02:00		
